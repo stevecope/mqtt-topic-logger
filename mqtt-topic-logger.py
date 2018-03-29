@@ -19,8 +19,6 @@ from queue import Queue
 from mqtt_functions import *
 from command import command_input
 import command
-#from utilities import convert, print_out
-
 
 q=Queue()
 ##helper functions
@@ -80,13 +78,13 @@ else:
     print("starting storing all data")
     
 ##
-#Log_worker_flag=True
+
 t = threading.Thread(target=log_worker) #start logger
 t.start() #start logging thread
 ###
 
 client.last_message=dict()
-client.q=q #make queue available as part of client
+client.q=q #make queue available as part of client object
 
 
 #loop and wait until interrupted
