@@ -1,0 +1,8 @@
+This software is free to use and modify as you see fit. 
+If you would like to support my efforts then you can make a conribution via PayPal using this link.
+http://paypal.me/stevesinternetguide
+
+If you have comments. What to report bugs,suggest improvements or features then either comment on the site.
+http://www.steves-internet-guide.com/simple-python-mqtt-data-logger/
+or by email
+steve@steves-internet-guide.com
