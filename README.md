@@ -6,9 +6,10 @@ This software monitors a group of topics and creates a log file
 for each topic to which this MQTT client has subscribed.
 
 
-You can specify the root log directory when starting
+You can specify the root log directory when starting defaults to tlogs
 
 .
+
 Default log size is 5MB
 You need to provide the script with:
 
@@ -29,7 +30,7 @@ Valid command line Options:
 -u Username 
 -P Password
 -s <store all data>\
--l <log directory default= mlogs> 
+-l <log directory default= tlogs> 
 -T test mode when use with the data logger tester
 
 	Example Usage:
@@ -75,6 +76,7 @@ To create an instance you ca supply two parameters:
 log=tlogger.T_logger(log_dir)
 
 The logger creates the log files in the directory using the topic names for the directory names and log files starting with log000.txt
+When the file reaches 5Mb it is rotated
 
  log data  is JSON format with a timestamp added to the message
 
