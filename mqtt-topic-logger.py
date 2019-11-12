@@ -1,3 +1,4 @@
+#!c:\python34\python
 #!python3
 ###demo code provided by Steve Cope at www.steves-internet-guide.com
 ##email steve@steves-internet-guide.com
@@ -133,11 +134,12 @@ def has_changed_test(client,topic,msg):
     return True
     
 def has_changed(client,topic,msg):
+    #print("has changed ",options["testmode"])
     if options["testmode"]:
         return has_changed_test(client,topic,msg)
 
     if topic in client.last_message:
-        if client.last_message[topic]==msg1:
+        if client.last_message[topic]==msg:
             return False
     client.last_message[topic]=msg
     return True
