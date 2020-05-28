@@ -32,6 +32,9 @@ Valid command line Options:
 -s <store all data>\
 -l <log directory default= tlogs> 
 -T test mode when use with the data logger tester
+-r Record size in bytes default=10000
+-c log in csv format
+-f -f filename of header file default is data.csv
 
 	Example Usage:
 
@@ -39,29 +42,36 @@ You will always need to specify the broker name or IP address
 and the topics to log
 
 Note: you may not need to use the python prefix or may 
-need to use python3 mqtt_data_logger.py (Linux)
+need to use python3 mqtt-topic-logger.py (Linux)
 
 Specify broker and topics 
 
-    python mqtt_data_logger.py -b 192.168.1.157 -t sensors/#
+    python mqtt-topic-logger.py -h 192.168.1.157 -t sensors/#
 
 Specify broker and multiple topics
 
-    python mqtt_data_logger.py -b 192.168.1.157 -t sensors/# -t  home/#
+    python mqtt-topic-logger.py -h 192.168.1.157 -t sensors/# -t  home/#
 	
 
 Log All Data:
 
-    python mqtt_data_logger.py b 192.168.1.157 -t sensors/# -s 
+    python mqtt-topic-logger.py -h 192.168.1.157 -t sensors/# -s 
 
 Specify the client name used by the logger
 
-    python mqtt_data_logger.py b 192.168.1.157 -t sensors/# -n data-logger
+    python mqtt-topic-logger.py -h 192.168.1.157 -t sensors/# -n data-logger
 
 Specify the log directory
 
-    python mqtt_data_logger.py b 192.168.1.157 -t sensors/# -l mylogs
- 
+    python mqtt-topic-logger.py -h 192.168.1.157 -t sensors/# -l mylogs
+	
+Log in CSV format
+
+    python mqtt-topic-logger.py -h 192.168.1.157 -t sensors/# -c
+
+ Log in CSV format and use data.csv header file
+
+    python mqtt-topic-logger.py -h 192.168.1.157 -t sensors/# -c -f data.csv
 ---------
 Logger Class
 
@@ -84,3 +94,14 @@ When the file reaches 5Mb it is rotated
 The logger will return True if successful and False if not.
 
 To prevent loss of data in the case of computer failure the logs are continuously flushed to disk .
+
+The logger will not clear log files when you start the logger you should ensure the log directory is empty.
+When logging  to a csv file you can change the default header order using a header file.
+Each topic requires its own header entry. Below is an example header file:
+
+test/sensor1,time_ms,time,ms,Urms,Umin,Umax
+test/sensor2,time_ms,time,ms,Urms,Umin,Umax
+test/sensor3,time_ms,time,sensor,count,status
+test/sensor4,time_ms,time,ms,Urms,Umin,Umax,count
+
+You can see that topics sensor1 and sensor2 use the same header whereas sensor3 and sensor4 have different headers.

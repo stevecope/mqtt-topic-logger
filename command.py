@@ -14,29 +14,28 @@ options["verbose"]=True
 options["cname"]=""
 options["topics"]=[("",0)]
 options["storechangesonly"]=True
-options["testmode"]=False
-options["loglevel"]=3
-options["log_dir"]="tlogs"
-options["log_records"]=5000
+options["keepalive"]=60
+options["loglevel"]="WARNING"
+options["log_dir"]="mlogs"
+options["log_records"]=10000
 options["number_logs"]=0
+options["JSON"]=True
+options["csv"]=False
+options["header_file"]="data.csv"
+options["fname"]="data.csv"
+options["header_flag"]=False
 
-#Test mode was introduced because when using a test generator
-#we need to add various counters to message so as to track it.
-#This meas that even though the real message doesn't change
-#the overall message does. The data logger when in test mode ignores
-#the counters in the message and looks only at the status field
-#which contains the actual data.
 def command_input(options={}):
     topics_in=[]
     qos_in=[]
 
     valid_options=" --help <help> -h or -b <broker> -p <port>-t <topic> -q QOS -v <verbose> -h <help>\
- -L logging level 0-5 ,Debug,Info,Warning,Error,critical)  -n Client ID or Name -u Username -P Password -s <store all data>\
--l <log directory default= mlogs> \
--T test mode used when using tester and with log ony changes as true"
+ -d logging debug  -n Client ID or Name -u Username -P Password -s <store all data>\
+-l <log directory default= mlogs> -r <Record size bytes default=10000> -f <filename>\
+-L <number of log files default= unlimited> -j <log in JSON format> -c <log in csvformat>"
     print_options_flag=False
     try:
-      opts, args = getopt.getopt(sys.argv[1:],"h:b:p:t:q:l:vsTn:u:P:l:L:")
+      opts, args = getopt.getopt(sys.argv[1:],"h:b:jcsdk:p:t:q:l:L:vn:u:P:l:r:f:")
     except getopt.GetoptError:
       print (sys.argv[0],valid_options)
       sys.exit(2)
@@ -47,8 +46,8 @@ def command_input(options={}):
              options["broker"] = str(arg)
         elif opt == "-b":
              options["broker"] = str(arg)
-        elif opt == "-T":
-             options["testmode"] = True
+        elif opt == "-k":
+             options["keepalive"] = int(arg)
         elif opt =="-p":
             options["port"] = int(arg)
         elif opt =="-t":
@@ -57,8 +56,11 @@ def command_input(options={}):
              qos_in.append(int(arg))
         elif opt =="-n":
              options["cname"]=arg
-        elif opt =="-L":
-            options["loglevel"]=int(arg)
+        elif opt =="-f":
+             options["fname"]=arg
+             options["header_flag"]=True
+        elif opt =="-d":
+            options["loglevel"]="DEBUG"
         elif opt == "-P":
              options["password"] = str(arg)
         elif opt == "-u":
@@ -69,7 +71,14 @@ def command_input(options={}):
             options["storechangesonly"]=False
         elif opt =="-l":
             options["log_dir"]=str(arg)
-
+        elif opt =="-r":
+            options["log_records"]=int(arg)
+        elif opt =="-L":
+            options["number_logs"]=int(arg)
+        elif opt =="-j":
+            options["JSON"]=True
+        elif opt =="-c":
+            options["csv"]=True
 
 
     lqos=len(qos_in)

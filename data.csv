@@ -1,0 +1,4 @@
+test/sensor1,time_ms,time,ms,Urms,Umin,Umax
+test/sensor2,time_ms,time,ms,Urms,Umin,Umax
+test/sensor3,time_ms,time,sensor,count,status
+test/sensor4,time_ms,time,ms,Urms,Umin,Umax,count
