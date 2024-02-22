@@ -72,6 +72,8 @@ Log in CSV format
  Log in CSV format and use data.csv header file
 
     python mqtt-topic-logger.py -h 192.168.1.157 -t sensors/# -c -f data.csv
+
+
 ---------
 Logger Class
 
@@ -105,3 +107,4 @@ test/sensor3,time_ms,time,sensor,count,status
 test/sensor4,time_ms,time,ms,Urms,Umin,Umax,count
 
 You can see that topics sensor1 and sensor2 use the same header whereas sensor3 and sensor4 have different headers.
+Because topics can have different json foramts  the better option is to let the script build the header file rather than supplying one.
